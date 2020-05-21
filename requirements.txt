@@ -1,0 +1,7 @@
+logzero
+kanilog
+setuptools
+add_parent_path
+delegator
+paramiko
+scp
