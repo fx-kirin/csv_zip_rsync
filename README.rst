@@ -13,7 +13,7 @@ compress csv to zip and rsync to remote server
 Usage
 -----
 
-Compress csv files in a directory and compress it to zip file. And upload to remote ssh server.
+Compress csv files in a directory to zip file. And upload to remote ssh server.
 
 Including checking zip completion and remove csv and zip files after they are uploaded.
 
