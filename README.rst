@@ -13,8 +13,20 @@ compress csv to zip and rsync to remote server
 Usage
 -----
 
+Compress csv files in a directory and compress it to zip file. And upload to remote ssh server.
+
+Including checking zip completion and remove csv and zip files after they are uploaded.
+
+.. code-block::
+
+   csv_zip_rsync "{directory to backup}" "ssh name" "remote directory to upload" "not modified period in sec" "suffix to zip and upload"
+
 Installation
 ------------
+
+.. code-block::
+
+   pip install csv_zip_rsync
 
 Used compression method
 -----------------------

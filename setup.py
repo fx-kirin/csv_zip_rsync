@@ -27,7 +27,7 @@ def get_requires():
 
 setup(
     name="csv_zip_rsync",
-    version="0.1.0",
+    version="0.1.1",
     url="https://github.com/fx-kirin/csv_zip_rsync",
     license='MIT',
     scripts=["bin/csv_zip_rsync", ],
