@@ -10,7 +10,7 @@
 
 """
 
-"""csv_zip_scp - compress csv to zip and scp to remote server"""
+"""csv_zip_rsync - compress csv to zip and rsync to remote server"""
 
 __version__ = "0.1.0"
 __author__ = "fx-kirin <fx.kirin@gmail.com>"
@@ -22,8 +22,6 @@ import zipfile
 from pathlib import Path
 
 import kanilog
-import paramiko
-from scp import SCPClient
 
 import delegator
 
@@ -74,7 +72,8 @@ def unzip_all_zip_files(root_dir):
 
 def upload_and_remove_zip(root_dir, remote_name, remote_dir):
     if isinstance(root_dir, str):
-        root_dir = Path(root_dir).expanduser()
+        root_dir = Path(root_dir)
+    root_dir = root_dir.expanduser().absolute()
     command = f'rsync -av  --include="*/" --include="*.zip" --exclude="*" "{root_dir}/" "{remote_name}":"{remote_dir}"'
     logger.info(f"executing \"{command}\"")
     result = delegator.run(command)
@@ -86,4 +85,6 @@ def upload_and_remove_zip(root_dir, remote_name, remote_dir):
         if str(target_path) in result.out:
             logger.info(f"{target_path} Uploaded. Delete zip file.")
             zip_file_path.unlink()
-    delegator.run(f"find {root_dir} -type d -exec rmdir {{}} + 2>/dev/null")
+        else:
+            logger.error(f"Must have uploaded {target_path} but it's not found in output.")
+    delegator.run(f"find {root_dir}/* -type d -empty -delete")

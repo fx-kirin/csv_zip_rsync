@@ -26,16 +26,16 @@ def get_requires():
 
 
 setup(
-    name="csv_zip_scp",
+    name="csv_zip_rsync",
     version="0.1.0",
-    url="https://github.com/fx-kirin/csv_zip_scp",
+    url="https://github.com/fx-kirin/csv_zip_rsync",
     license='MIT',
-    scripts=["bin/csv_zip_scp", ],
+    scripts=["bin/csv_zip_rsync", ],
 
     author="fx-kirin",
     author_email="fx.kirin@gmail.com",
 
-    description="compress csv to zip and scp to remote server",
+    description="compress csv to zip and rsync to remote server",
     long_description=read("README.rst"),
 
     packages=find_packages(exclude=('tests',)),

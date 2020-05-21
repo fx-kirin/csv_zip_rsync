@@ -1,8 +1,8 @@
-# csv_zip_scp
+# csv_zip_rsync
 
-[![Latest PyPI version](https://img.shields.io/pypi/v/package_name.svg)](https://pypi.python.org/pypi/csv_zip_scp)
+[![Latest PyPI version](https://img.shields.io/pypi/v/package_name.svg)](https://pypi.python.org/pypi/csv_zip_rsync)
 
-compress csv to zip and scp to remote server
+compress csv to zip and rsync to remote server
 
 ## Usage
 

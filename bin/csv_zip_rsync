@@ -17,7 +17,7 @@ import kanilog
 import stdlogging
 from pathlib import Path
 
-from csv_zip_scp import upload_and_remove_zip, make_zip_from_csv
+from csv_zip_rsync import upload_and_remove_zip, make_zip_from_csv
 
 
 def main(root_dir, remote_name, remote_dir, not_modified_period=86400, suffix="csv"):
