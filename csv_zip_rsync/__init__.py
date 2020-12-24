@@ -74,7 +74,7 @@ def upload_and_remove_zip(root_dir, remote_name, remote_dir):
     if isinstance(root_dir, str):
         root_dir = Path(root_dir)
     root_dir = root_dir.expanduser().absolute()
-    command = f'rsync -av  --include="*/" --include="*.zip" --exclude="*" "{root_dir}/" "{remote_name}":"{remote_dir}"'
+    command = f'rsync -av -I --include="*/" --include="*.zip" --exclude="*" "{root_dir}/" "{remote_name}":"{remote_dir}"'
     logger.info(f"executing \"{command}\"")
     result = delegator.run(command)
     if result.err != '':
