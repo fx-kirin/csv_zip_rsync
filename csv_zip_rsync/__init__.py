@@ -11,19 +11,19 @@
 """
 
 """csv_zip_rsync - compress csv to zip and rsync to remote server"""
+import os
+import sys
+import time
+import zipfile
+from pathlib import Path
+
+import delegator
+import kanilog
 
 __version__ = "0.1.0"
 __author__ = "fx-kirin <fx.kirin@gmail.com>"
 __all__ = ["make_zip_from_csv"]
 
-import os
-import time
-import zipfile
-from pathlib import Path
-
-import kanilog
-
-import delegator
 
 logger = kanilog.get_module_logger(__file__, 1)
 
@@ -74,7 +74,13 @@ def upload_and_remove_zip(root_dir, remote_name, remote_dir):
     if isinstance(root_dir, str):
         root_dir = Path(root_dir)
     root_dir = root_dir.expanduser().absolute()
-    command = f'rsync -av -I --include="*/" --include="*.zip" --exclude="*" "{root_dir}/" "{remote_name}":"{remote_dir}"'
+    if sys.platform == 'win32':
+        root_dir_str = delegator.run(f"cygpath {root_dir}").out.replace("\n", "")
+        remote_dir_str = delegator.run(f"cygpath {remote_dir}").out.replace("\n", "")
+    else:
+        root_dir_str = str(root_dir)
+        remote_dir_str = str(remote_dir)
+    command = f'rsync -av -I --include="*/" --include="*.zip" --exclude="*" "{root_dir_str}/" "{remote_name}":"{remote_dir_str}"'
     logger.info(f"executing \"{command}\"")
     result = delegator.run(command)
     if result.err != '':
@@ -82,6 +88,8 @@ def upload_and_remove_zip(root_dir, remote_name, remote_dir):
 
     for zip_file_path in root_dir.glob("**/*.zip"):
         target_path = zip_file_path.relative_to(root_dir)
+        if sys.platform == 'win32':
+            target_path = delegator.run(f"cygpath {target_path}").out.replace("\n", "")
         if str(target_path) in result.out:
             logger.info(f"{target_path} Uploaded. Delete zip file.")
             zip_file_path.unlink()
